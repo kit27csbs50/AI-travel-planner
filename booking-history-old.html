@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderLust AI - Booking History</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f4c3a 0%, #1a5f4a 50%, #2d7a5f 100%);
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 76, 58, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .logo-text {
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.5px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 2rem 2rem;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .bookings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .booking-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .booking-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .booking-id {
+            font-size: 0.9rem;
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .booking-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-confirmed {
+            background: rgba(74, 222, 128, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+
+        .status-pending {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .booking-details {
+            margin-bottom: 2rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .booking-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #0f4c3a;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-text {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 100px 1rem 1rem;
+            }
+            
+            .bookings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .booking-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <span class="logo-text">WanderLust</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Your Travel History</h1>
+            <p class="page-subtitle">Here are your upcoming and past adventures</p>
+        </div>
+
+        <div id="bookings-container">
+            <!-- Bookings will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Sample booking data - in a real app, this would come from a backend
+        const sampleBookings = [
+            {
+                id: 'WL001ABC',
+                passengerName: 'Sadhana M',
+                destination: 'Goa, India',
+                duration: '5 days',
+                seatNumber: '12A',
+                status: 'confirmed',
+                bookingDate: '2024-01-15',
+                departureDate: '2024-02-10',
+                budget: '₹45,000',
+                interests: ['Beach', 'Culture', 'Food', 'Relaxation'],
+                hotelType: '4-star'
+            },
+            {
+                id: 'WL002DEF',
+                passengerName: 'Sadhana M',
+                destination: 'Paris, France',
+                duration: '7 days',
+                seatNumber: '8C',
+                status: 'confirmed',
+                bookingDate: '2024-01-20',
+                departureDate: '2024-03-15',
+                budget: '€2,800',
+                interests: ['Culture', 'Art', 'Food', 'Romance'],
+                hotelType: '5-star'
+            },
+            {
+                id: 'WL003GHI',
+                passengerName: 'Sadhana M',
+                destination: 'Bali, Indonesia',
+                duration: '10 days',
+                seatNumber: '15B',
+                status: 'pending',
+                bookingDate: '2024-01-25',
+                departureDate: '2024-04-20',
+                budget: '$1,800',
+                interests: ['Nature', 'Adventure', 'Relaxation', 'Culture'],
+                hotelType: '4-star'
+            }
+        ];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Clear old cached data to force refresh with new names
+            localStorage.removeItem('wanderlustBookings');
+            loadBookings();
+        });
+
+        function loadBookings() {
+            // Always use the updated sample data with "Sadhana M"
+            let bookings = sampleBookings;
+            
+            // Save updated data to localStorage
+            localStorage.setItem('wanderlustBookings', JSON.stringify(sampleBookings));
+
+            const container = document.getElementById('bookings-container');
+            
+            if (bookings.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <h3 class="empty-title">No bookings found</h3>
+                        <p class="empty-text">Start planning your next adventure!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const bookingsGrid = document.createElement('div');
+            bookingsGrid.className = 'bookings-grid';
+
+            bookings.forEach(booking => {
+                const bookingCard = createBookingCard(booking);
+                bookingsGrid.appendChild(bookingCard);
+            });
+
+            container.appendChild(bookingsGrid);
+        }
+
+        function createBookingCard(booking) {
+            const card = document.createElement('div');
+            card.className = 'booking-card';
+            
+            const statusClass = booking.status === 'confirmed' ? 'status-confirmed' : 'status-pending';
+            const statusText = booking.status === 'confirmed' ? 'Confirmed' : 'Pending';
+
+            card.innerHTML = `
+                <div class="booking-header">
+                    <div class="booking-id">#${booking.id}</div>
+                    <div class="booking-status ${statusClass}">
+                        ${statusText}
+                    </div>
+                </div>
+                
+                <div class="booking-details">
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            Passenger
+                        </div>
+                        <div class="detail-value">${booking.passengerName}</div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            Destination
+                        </div>
+                        <div class="detail-value">${booking.destination}</div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            Duration
+                        </div>
+                        <div class="detail-value">${booking.duration}</div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            Seat
+                        </div>
+                        <div class="detail-value">${booking.seatNumber}</div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            Departure
+                        </div>
+                        <div class="detail-value">${formatDate(booking.departureDate)}</div>
+                    </div>
+                </div>
+                
+                <div class="booking-actions">
+                    <button class="btn btn-primary" onclick="viewTripDetails('${booking.id}')">
+                        See My Trip Plan
+                    </button>
+                    <button class="btn btn-secondary" onclick="viewTicket('${booking.id}')">
+                        My Ticket
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function viewTripDetails(bookingId) {
+            // Get all bookings from localStorage
+            const bookings = JSON.parse(localStorage.getItem('wanderlustBookings')) || [];
+            
+            // Find the selected booking
+            const selectedBooking = bookings.find(booking => booking.id === bookingId);
+            
+            if (selectedBooking) {
+                // Save selected booking to localStorage for trip details page
+                localStorage.setItem('selectedTripDetails', JSON.stringify(selectedBooking));
+                
+                // Redirect to trip details page
+                window.location.href = 'trip-details.html';
+            } else {
+                alert('Booking not found!');
+            }
+        }
+
+        function viewTicket(bookingId) {
+            // Get all bookings from localStorage
+            const bookings = JSON.parse(localStorage.getItem('wanderlustBookings')) || [];
+            
+            // Find the selected booking
+            const selectedBooking = bookings.find(booking => booking.id === bookingId);
+            
+            if (selectedBooking) {
+                // Save selected booking to localStorage
+                localStorage.setItem('selectedBooking', JSON.stringify(selectedBooking));
+                
+                // Redirect to ticket page
+                window.location.href = 'ticket.html';
+            } else {
+                alert('Booking not found!');
+            }
+        }
+
+        function manageBooking(bookingId) {
+            // Placeholder for manage booking functionality
+            alert(`Managing booking ${bookingId} - Feature coming soon!`);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.booking-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

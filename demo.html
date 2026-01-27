@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderLust AI - Project Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #8B4513;
+            min-height: 100vh;
+            color: #2F1B14;
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .demo-section {
+            background: #D2B48C;
+            border-radius: 15px;
+            border: 2px solid #A0522D;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #A0522D;
+        }
+
+        .demo-header h2 {
+            color: #2F1B14;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .demo-header p {
+            color: #654321;
+            font-size: 0.9rem;
+        }
+
+        /* Frontend Demo Styles */
+        .travel-form {
+            background: #F5DEB3;
+            border-radius: 10px;
+            border: 2px solid #A0522D;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-title {
+            color: #2F1B14;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .input-group label {
+            font-size: 0.8rem;
+            color: #654321;
+            font-weight: bold;
+        }
+
+        .input-group input, .input-group select {
+            padding: 0.7rem;
+            border: 2px solid #A0522D;
+            border-radius: 8px;
+            background: #FAEBD7;
+            color: #2F1B14;
+            font-size: 0.9rem;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #654321;
+        }
+
+        .pill-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .pill-btn {
+            padding: 0.4rem 0.8rem;
+            border: 2px solid #A0522D;
+            border-radius: 15px;
+            background: #F5DEB3;
+            color: #2F1B14;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .pill-btn:hover, .pill-btn.selected {
+            background: #A0522D;
+            color: #F5DEB3;
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #A0522D;
+            color: #F5DEB3;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .generate-btn:hover {
+            background: #654321;
+        }
+
+        /* Backend JSON Display */
+        .json-output {
+            background: #2F1B14;
+            border-radius: 10px;
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            overflow-y: auto;
+            max-height: 600px;
+            border: 2px solid #A0522D;
+            color: #F5DEB3;
+        }
+
+        .json-key {
+            color: #DEB887;
+        }
+
+        .json-string {
+            color: #90EE90;
+        }
+
+        .json-number {
+            color: #FFB6C1;
+        }
+
+        @media (max-width: 768px) {
+            .demo-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <!-- Frontend Demo Section -->
+        <div class="demo-section">
+            <div class="demo-header">
+                <h2><i class="fas fa-desktop"></i> Frontend Demo</h2>
+                <p>Interactive travel planning interface</p>
+            </div>
+            
+            <div class="travel-form">
+                <h3 class="form-title">Plan Your Trip</h3>
+                
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Your Name</label>
+                        <input type="text" value="Sadhana M" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label>Age</label>
+                        <input type="number" value="25" readonly>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Destination</label>
+                    <input type="text" value="Goa, India" readonly>
+                </div>
+                
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Budget (INR)</label>
+                        <input type="text" value="₹45,000" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label>Duration</label>
+                        <input type="text" value="5 days" readonly>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Interests</label>
+                    <div class="pill-container">
+                        <span class="pill-btn selected">Beach</span>
+                        <span class="pill-btn selected">Culture</span>
+                        <span class="pill-btn selected">Food</span>
+                        <span class="pill-btn">Adventure</span>
+                        <span class="pill-btn">Nature</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Food Preferences</label>
+                    <div class="pill-container">
+                        <span class="pill-btn selected">Vegetarian</span>
+                        <span class="pill-btn selected">Local Cuisine</span>
+                        <span class="pill-btn">Seafood</span>
+                    </div>
+                </div>
+                
+                <button class="generate-btn">
+                    Generate Itinerary
+                </button>
+            </div>
+        </div>
+
+        <!-- Backend Demo Section -->
+        <div class="demo-section">
+            <div class="demo-header">
+                <h2><i class="fas fa-server"></i> Backend Response</h2>
+                <p>JSON data structure and processing</p>
+            </div>
+            
+            <div class="json-output">
+<span class="json-key">{</span>
+  <span class="json-key">"status"</span>: <span class="json-string">"success"</span>,
+  <span class="json-key">"bookingId"</span>: <span class="json-string">"WL001ABC"</span>,
+  <span class="json-key">"passenger"</span>: <span class="json-string">"Sadhana M"</span>,
+  <span class="json-key">"destination"</span>: <span class="json-string">"Goa, India"</span>,
+  <span class="json-key">"duration"</span>: <span class="json-number">5</span>,
+  <span class="json-key">"budget"</span>: <span class="json-number">45000</span>,
+  <span class="json-key">"currency"</span>: <span class="json-string">"INR"</span>,
+  <span class="json-key">"interests"</span>: [
+    <span class="json-string">"Beach"</span>,
+    <span class="json-string">"Culture"</span>,
+    <span class="json-string">"Food"</span>
+  ],
+  <span class="json-key">"itinerary"</span>: [
+    {
+      <span class="json-key">"day"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"title"</span>: <span class="json-string">"Arrival & Beach"</span>,
+      <span class="json-key">"activities"</span>: [
+        <span class="json-string">"Airport pickup"</span>,
+        <span class="json-string">"Hotel check-in"</span>,
+        <span class="json-string">"Baga Beach visit"</span>,
+        <span class="json-string">"Sunset viewing"</span>
+      ]
+    },
+    {
+      <span class="json-key">"day"</span>: <span class="json-number">2</span>,
+      <span class="json-key">"title"</span>: <span class="json-string">"Culture & Food"</span>,
+      <span class="json-key">"activities"</span>: [
+        <span class="json-string">"Old Goa churches"</span>,
+        <span class="json-string">"Local market tour"</span>,
+        <span class="json-string">"Traditional lunch"</span>,
+        <span class="json-string">"Spice plantation"</span>
+      ]
+    }
+  ],
+  <span class="json-key">"hotel"</span>: {
+    <span class="json-key">"name"</span>: <span class="json-string">"Beach Resort Goa"</span>,
+    <span class="json-key">"rating"</span>: <span class="json-number">4</span>,
+    <span class="json-key">"price"</span>: <span class="json-number">8000</span>
+  },
+  <span class="json-key">"transportation"</span>: {
+    <span class="json-key">"flight"</span>: <span class="json-string">"AI-101"</span>,
+    <span class="json-key">"seat"</span>: <span class="json-string">"12A"</span>,
+    <span class="json-key">"cost"</span>: <span class="json-number">15000</span>
+  },
+  <span class="json-key">"totalCost"</span>: <span class="json-number">45000</span>,
+  <span class="json-key">"timestamp"</span>: <span class="json-string">"2024-01-27T10:30:00Z"</span>
+<span class="json-key">}</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple demo interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.querySelector('.generate-btn');
+            const jsonOutput = document.querySelector('.json-output');
+            
+            generateBtn.addEventListener('click', function() {
+                this.textContent = 'Processing...';
+                this.style.background = '#654321';
+                
+                setTimeout(() => {
+                    this.textContent = 'Itinerary Generated!';
+                    jsonOutput.style.border = '2px solid #90EE90';
+                    
+                    setTimeout(() => {
+                        this.textContent = 'Generate Itinerary';
+                        this.style.background = '#A0522D';
+                        jsonOutput.style.border = '2px solid #A0522D';
+                    }, 2000);
+                }, 1000);
+            });
+            
+            // Interactive pills
+            document.querySelectorAll('.pill-btn:not(.selected)').forEach(pill => {
+                pill.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

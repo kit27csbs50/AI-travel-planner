@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderLust AI - Trip Details</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Arial:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Trip Details Specific Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #F8BBD9;
+            min-height: 100vh;
+            color: #8B1538;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: #E91E63;
+            border-bottom: 2px solid #C2185B;
+            padding: 1rem 0;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #FCE4EC;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .back-btn {
+            background: #F8BBD9;
+            color: #8B1538;
+            border: 2px solid #C2185B;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #FCE4EC;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 2rem 2rem;
+            min-height: 100vh;
+        }
+
+        .trip-header {
+            background: #FCE4EC;
+            border-radius: 15px;
+            border: 2px solid #E91E63;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .trip-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #8B1538;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .trip-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #8B1538;
+            font-weight: bold;
+        }
+
+        .summary-item i {
+            color: #E91E63;
+            font-size: 1.2rem;
+        }
+
+        .trip-interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .interest-tag {
+            padding: 0.4rem 0.8rem;
+            background: #FFF0F5;
+            border: 2px solid #E91E63;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #8B1538;
+            font-weight: bold;
+        }
+
+        .itinerary-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #8B1538;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .day-card {
+            background: #FCE4EC;
+            border-radius: 15px;
+            border: 2px solid #E91E63;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .day-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #E91E63;
+        }
+
+        .day-title {
+            color: #8B1538;
+            font-size: 1.4rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .day-weather {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #C2185B;
+            font-size: 0.9rem;
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .activity-card {
+            background: #FFF0F5;
+            border: 2px solid #E91E63;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .activity-card:hover {
+            background: #F8BBD9;
+            transform: translateY(-2px);
+        }
+
+        .activity-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .activity-icon {
+            width: 50px;
+            height: 50px;
+            background: #F8BBD9;
+            border: 2px solid #E91E63;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8B1538;
+            font-size: 1.2rem;
+        }
+
+        .activity-info h4 {
+            color: #8B1538;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            font-weight: bold;
+        }
+
+        .activity-time {
+            color: #C2185B;
+            font-size: 0.9rem;
+        }
+
+        .activity-description {
+            color: #8B1538;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .activity-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .activity-cost {
+            color: #E91E63;
+            font-weight: bold;
+        }
+
+        .activity-duration {
+            color: #C2185B;
+        }
+
+        .recommendations-section {
+            background: #FCE4EC;
+            border: 2px solid #E91E63;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .recommendation-card {
+            background: #FFF0F5;
+            border: 2px solid #E91E63;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .recommendation-icon {
+            font-size: 2rem;
+            color: #E91E63;
+            margin-bottom: 1rem;
+        }
+
+        .recommendation-title {
+            color: #8B1538;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .recommendation-text {
+            color: #8B1538;
+            font-size: 0.9rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn-primary {
+            background: #E91E63;
+            color: #FCE4EC;
+        }
+
+        .btn-primary:hover {
+            background: #C2185B;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #F8BBD9;
+            color: #8B1538;
+            border: 2px solid #E91E63;
+        }
+
+        .btn-secondary:hover {
+            background: #FCE4EC;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 100px 1rem 1rem;
+            }
+            
+            .trip-header {
+                padding: 2rem 1.5rem;
+            }
+            
+            .trip-title {
+                font-size: 2rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .trip-summary {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <span class="logo-text">WanderLust</span>
+            </div>
+            <a href="booking-history.html" class="back-btn">
+                ← Back to My Trips
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Trip Header -->
+        <div class="trip-header">
+            <h1 class="trip-title" id="trip-title">
+                <span id="destination-name">Loading...</span>
+            </h1>
+            
+            <div class="trip-summary" id="trip-summary">
+                <!-- Summary items will be populated by JavaScript -->
+            </div>
+            
+            <div class="trip-interests" id="trip-interests">
+                <!-- Interest tags will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Itinerary Section -->
+        <div class="itinerary-section">
+            <h2 class="section-title">
+                Your Day-by-Day Plan
+            </h2>
+            <div id="itinerary-container">
+                <!-- Day cards will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Recommendations Section -->
+        <div class="recommendations-section">
+            <h2 class="section-title">
+                Our Recommendations
+            </h2>
+            <div class="recommendations-grid" id="recommendations-grid">
+                <!-- Recommendations will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="downloadItinerary()">
+                Download Itinerary
+            </button>
+            <button class="btn btn-secondary" onclick="shareTrip()">
+                Share Trip
+            </button>
+            <button class="btn btn-secondary" onclick="modifyTrip()">
+                Modify Trip
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTripDetails();
+        });
+
+        function loadTripDetails() {
+            // Get selected booking from localStorage
+            const selectedBooking = JSON.parse(localStorage.getItem('selectedTripDetails'));
+            
+            if (!selectedBooking) {
+                alert('No trip selected. Redirecting to booking history.');
+                window.location.href = 'booking-history.html';
+                return;
+            }
+
+            // Generate AI itinerary based on booking details
+            const tripData = generateAIItinerary(selectedBooking);
+            
+            // Populate the page
+            populateTripHeader(tripData);
+            populateItinerary(tripData);
+            populateRecommendations(tripData);
+        }
+
+        function generateAIItinerary(booking) {
+            // AI-generated trip data based on destination
+            const destinations = {
+                'Goa, India': {
+                    interests: ['Beach', 'Culture', 'Food', 'Relaxation'],
+                    weather: 'Sunny, 28°C',
+                    budget: '₹45,000',
+                    activities: [
+                        {
+                            day: 1,
+                            theme: 'Arrival & Beach Exploration',
+                            weather: 'Sunny, 29°C',
+                            activities: [
+                                {
+                                    icon: 'fas fa-plane-arrival',
+                                    title: 'Airport Pickup & Check-in',
+                                    time: '10:00 AM - 12:00 PM',
+                                    description: 'Comfortable airport transfer to your beachfront resort. Welcome drinks and room orientation.',
+                                    cost: '₹2,500',
+                                    duration: '2 hours'
+                                },
+                                {
+                                    icon: 'fas fa-umbrella-beach',
+                                    title: 'Baga Beach Relaxation',
+                                    time: '2:00 PM - 6:00 PM',
+                                    description: 'Unwind at the famous Baga Beach. Beach loungers, water sports, and sunset views.',
+                                    cost: '₹1,500',
+                                    duration: '4 hours'
+                                },
+                                {
+                                    icon: 'fas fa-utensils',
+                                    title: 'Seafood Dinner at Tito\'s',
+                                    time: '7:30 PM - 10:00 PM',
+                                    description: 'Authentic Goan seafood cuisine with live music and beachside ambiance.',
+                                    cost: '₹3,000',
+                                    duration: '2.5 hours'
+                                }
+                            ]
+                        },
+                        {
+                            day: 2,
+                            theme: 'Cultural Heritage & Adventure',
+                            weather: 'Partly Cloudy, 27°C',
+                            activities: [
+                                {
+                                    icon: 'fas fa-church',
+                                    title: 'Old Goa Churches Tour',
+                                    time: '9:00 AM - 1:00 PM',
+                                    description: 'Visit UNESCO World Heritage sites including Basilica of Bom Jesus and Se Cathedral.',
+                                    cost: '₹2,000',
+                                    duration: '4 hours'
+                                },
+                                {
+                                    icon: 'fas fa-water',
+                                    title: 'Dudhsagar Waterfall Trek',
+                                    time: '2:30 PM - 7:00 PM',
+                                    description: 'Adventure trek to India\'s tallest waterfall with jeep safari through spice plantations.',
+                                    cost: '₹4,500',
+                                    duration: '4.5 hours'
+                                },
+                                {
+                                    icon: 'fas fa-cocktail',
+                                    title: 'Sunset Cruise with Dinner',
+                                    time: '7:30 PM - 10:30 PM',
+                                    description: 'Romantic sunset cruise on Mandovi River with traditional Goan dinner and folk dance.',
+                                    cost: '₹3,500',
+                                    duration: '3 hours'
+                                }
+                            ]
+                        }
+                    ],
+                    recommendations: [
+                        {
+                            icon: 'fas fa-camera',
+                            title: 'Photography Spots',
+                            text: 'Chapora Fort for panoramic views, colorful Latin Quarter, and sunset at Anjuna Beach'
+                        },
+                        {
+                            icon: 'fas fa-shopping-bag',
+                            title: 'Local Shopping',
+                            text: 'Anjuna Flea Market for handicrafts, Mapusa Market for spices, and cashew nuts'
+                        },
+                        {
+                            icon: 'fas fa-spa',
+                            title: 'Wellness Activities',
+                            text: 'Ayurvedic spa treatments, yoga sessions on the beach, and meditation retreats'
+                        },
+                        {
+                            icon: 'fas fa-fish',
+                            title: 'Must-Try Food',
+                            text: 'Fish curry rice, bebinca dessert, feni (local spirit), and fresh seafood'
+                        }
+                    ]
+                },
+                'Paris, France': {
+                    interests: ['Culture', 'Art', 'Food', 'Romance'],
+                    weather: 'Mild, 18°C',
+                    budget: '€2,800',
+                    activities: [
+                        {
+                            day: 1,
+                            theme: 'Iconic Landmarks & Romance',
+                            weather: 'Clear, 19°C',
+                            activities: [
+                                {
+                                    icon: 'fas fa-monument',
+                                    title: 'Eiffel Tower Experience',
+                                    time: '9:00 AM - 12:00 PM',
+                                    description: 'Skip-the-line access to all levels of the Eiffel Tower with champagne toast at the top.',
+                                    cost: '€85',
+                                    duration: '3 hours'
+                                },
+                                {
+                                    icon: 'fas fa-ship',
+                                    title: 'Seine River Cruise',
+                                    time: '2:00 PM - 4:00 PM',
+                                    description: 'Romantic cruise along the Seine with audio guide covering major landmarks.',
+                                    cost: '€45',
+                                    duration: '2 hours'
+                                },
+                                {
+                                    icon: 'fas fa-wine-glass',
+                                    title: 'Montmartre Evening Tour',
+                                    time: '6:00 PM - 10:00 PM',
+                                    description: 'Explore artistic Montmartre, visit Sacré-Cœur, and enjoy wine tasting in local bistros.',
+                                    cost: '€120',
+                                    duration: '4 hours'
+                                }
+                            ]
+                        },
+                        {
+                            day: 2,
+                            theme: 'Art & Culture Immersion',
+                            weather: 'Overcast, 16°C',
+                            activities: [
+                                {
+                                    icon: 'fas fa-palette',
+                                    title: 'Louvre Museum Private Tour',
+                                    time: '9:30 AM - 1:30 PM',
+                                    description: 'Private guided tour of the world\'s largest art museum, including Mona Lisa and Venus de Milo.',
+                                    cost: '€180',
+                                    duration: '4 hours'
+                                },
+                                {
+                                    icon: 'fas fa-leaf',
+                                    title: 'Luxembourg Gardens Stroll',
+                                    time: '2:30 PM - 4:30 PM',
+                                    description: 'Peaceful walk through beautiful gardens, palace visit, and traditional French picnic.',
+                                    cost: '€35',
+                                    duration: '2 hours'
+                                },
+                                {
+                                    icon: 'fas fa-theater-masks',
+                                    title: 'Opera House Evening Show',
+                                    time: '7:30 PM - 11:00 PM',
+                                    description: 'World-class opera or ballet performance at the stunning Palais Garnier.',
+                                    cost: '€150',
+                                    duration: '3.5 hours'
+                                }
+                            ]
+                        }
+                    ],
+                    recommendations: [
+                        {
+                            icon: 'fas fa-bread-slice',
+                            title: 'Culinary Delights',
+                            text: 'Croissants from Du Pain et des Idées, macarons from Ladurée, and dinner at Le Comptoir du Relais'
+                        },
+                        {
+                            icon: 'fas fa-shopping-bag',
+                            title: 'Shopping Districts',
+                            text: 'Champs-Élysées for luxury brands, Le Marais for vintage finds, and Saint-Germain for boutiques'
+                        },
+                        {
+                            icon: 'fas fa-camera',
+                            title: 'Instagram Spots',
+                            text: 'Trocadéro for Eiffel Tower shots, Pont Alexandre III, and colorful Rue Crémieux'
+                        },
+                        {
+                            icon: 'fas fa-coffee',
+                            title: 'Café Culture',
+                            text: 'Café de Flore for history, Breizh Café for modern twist, and sidewalk people-watching'
+                        }
+                    ]
+                },
+                'Bali, Indonesia': {
+                    interests: ['Nature', 'Adventure', 'Relaxation', 'Culture'],
+                    weather: 'Tropical, 30°C',
+                    budget: '$1,800',
+                    activities: [
+                        {
+                            day: 1,
+                            theme: 'Tropical Paradise Welcome',
+                            weather: 'Sunny, 31°C',
+                            activities: [
+                                {
+                                    icon: 'fas fa-spa',
+                                    title: 'Traditional Balinese Spa',
+                                    time: '10:00 AM - 1:00 PM',
+                                    description: 'Rejuvenating traditional massage and flower bath in a luxury spa overlooking rice terraces.',
+                                    cost: '$120',
+                                    duration: '3 hours'
+                                },
+                                {
+                                    icon: 'fas fa-leaf',
+                                    title: 'Tegallalang Rice Terraces',
+                                    time: '2:30 PM - 5:30 PM',
+                                    description: 'Explore stunning UNESCO rice terraces, swing over the jungle, and coffee plantation tour.',
+                                    cost: '$65',
+                                    duration: '3 hours'
+                                },
+                                {
+                                    icon: 'fas fa-fire',
+                                    title: 'Kecak Fire Dance Show',
+                                    time: '7:00 PM - 9:30 PM',
+                                    description: 'Traditional Balinese cultural performance with fire dance and local dinner.',
+                                    cost: '$45',
+                                    duration: '2.5 hours'
+                                }
+                            ]
+                        },
+                        {
+                            day: 2,
+                            theme: 'Adventure & Spiritual Journey',
+                            weather: 'Clear, 29°C',
+                            activities: [
+                                {
+                                    icon: 'fas fa-mountain',
+                                    title: 'Mount Batur Sunrise Trek',
+                                    time: '3:00 AM - 10:00 AM',
+                                    description: 'Guided trek to active volcano summit for spectacular sunrise views and breakfast.',
+                                    cost: '$85',
+                                    duration: '7 hours'
+                                },
+                                {
+                                    icon: 'fas fa-water',
+                                    title: 'Sekumpul Waterfall Adventure',
+                                    time: '12:00 PM - 5:00 PM',
+                                    description: 'Trek through jungle to Bali\'s most beautiful waterfall with natural swimming pools.',
+                                    cost: '$75',
+                                    duration: '5 hours'
+                                },
+                                {
+                                    icon: 'fas fa-pray',
+                                    title: 'Tanah Lot Temple Sunset',
+                                    time: '6:00 PM - 8:30 PM',
+                                    description: 'Visit iconic sea temple for sunset views and traditional blessing ceremony.',
+                                    cost: '$35',
+                                    duration: '2.5 hours'
+                                }
+                            ]
+                        }
+                    ],
+                    recommendations: [
+                        {
+                            icon: 'fas fa-utensils',
+                            title: 'Local Cuisine',
+                            text: 'Nasi Goreng, Satay, Gado-Gado, and fresh tropical fruits from local warungs'
+                        },
+                        {
+                            icon: 'fas fa-shopping-bag',
+                            title: 'Artisan Markets',
+                            text: 'Ubud Traditional Market for handicrafts, Sukawati for textiles, and Seminyak for modern crafts'
+                        },
+                        {
+                            icon: 'fas fa-om',
+                            title: 'Spiritual Experiences',
+                            text: 'Yoga retreats in Ubud, meditation sessions, and traditional healing ceremonies'
+                        },
+                        {
+                            icon: 'fas fa-waves',
+                            title: 'Beach Activities',
+                            text: 'Surfing in Canggu, snorkeling in Amed, and beach clubs in Seminyak'
+                        }
+                    ]
+                }
+            };
+
+            // Get destination data or use default
+            const destinationKey = Object.keys(destinations).find(key => 
+                booking.destination.includes(key.split(',')[0])
+            );
+            
+            const destinationData = destinations[destinationKey] || destinations['Goa, India'];
+            
+            return {
+                ...booking,
+                ...destinationData,
+                duration: parseInt(booking.duration) || 5
+            };
+        }
+
+        function populateTripHeader(tripData) {
+            document.getElementById('destination-name').textContent = tripData.destination;
+            
+            const summaryContainer = document.getElementById('trip-summary');
+            summaryContainer.innerHTML = `
+                <div class="summary-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>${tripData.duration} days</span>
+                </div>
+                <div class="summary-item">
+                    <i class="fas fa-rupee-sign"></i>
+                    <span>${tripData.budget}</span>
+                </div>
+                <div class="summary-item">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span>${tripData.weather}</span>
+                </div>
+                <div class="summary-item">
+                    <i class="fas fa-user"></i>
+                    <span>${tripData.passengerName}</span>
+                </div>
+                <div class="summary-item">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>#${tripData.id}</span>
+                </div>
+            `;
+            
+            const interestsContainer = document.getElementById('trip-interests');
+            interestsContainer.innerHTML = tripData.interests.map(interest => 
+                `<span class="interest-tag">${interest}</span>`
+            ).join('');
+        }
+
+        function populateItinerary(tripData) {
+            const container = document.getElementById('itinerary-container');
+            
+            tripData.activities.forEach(day => {
+                const dayCard = document.createElement('div');
+                dayCard.className = 'day-card';
+                
+                dayCard.innerHTML = `
+                    <div class="day-header">
+                        <div class="day-title">
+                            <i class="fas fa-calendar-day"></i>
+                            Day ${day.day}: ${day.theme}
+                        </div>
+                        <div class="day-weather">
+                            <i class="fas fa-thermometer-half"></i>
+                            ${day.weather}
+                        </div>
+                    </div>
+                    
+                    <div class="activities-grid">
+                        ${day.activities.map(activity => `
+                            <div class="activity-card">
+                                <div class="activity-header">
+                                    <div class="activity-icon">
+                                        <i class="${activity.icon}"></i>
+                                    </div>
+                                    <div class="activity-info">
+                                        <h4>${activity.title}</h4>
+                                        <div class="activity-time">${activity.time}</div>
+                                    </div>
+                                </div>
+                                <div class="activity-description">
+                                    ${activity.description}
+                                </div>
+                                <div class="activity-details">
+                                    <div class="activity-cost">${activity.cost}</div>
+                                    <div class="activity-duration">${activity.duration}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(dayCard);
+            });
+        }
+
+        function populateRecommendations(tripData) {
+            const container = document.getElementById('recommendations-grid');
+            
+            container.innerHTML = tripData.recommendations.map(rec => `
+                <div class="recommendation-card">
+                    <div class="recommendation-icon">
+                        <i class="${rec.icon}"></i>
+                    </div>
+                    <div class="recommendation-title">${rec.title}</div>
+                    <div class="recommendation-text">${rec.text}</div>
+                </div>
+            `).join('');
+        }
+
+        function downloadItinerary() {
+            const selectedBooking = JSON.parse(localStorage.getItem('selectedTripDetails'));
+            const link = document.createElement('a');
+            link.download = `WanderLust-AI-Itinerary-${selectedBooking.destination.replace(/\s+/g, '-')}.pdf`;
+            link.href = 'data:text/plain;charset=utf-8,WanderLust AI Detailed Itinerary - ' + selectedBooking.destination;
+            link.click();
+            
+            showNotification('Itinerary downloaded successfully! 📄');
+        }
+
+        function shareTrip() {
+            const selectedBooking = JSON.parse(localStorage.getItem('selectedTripDetails'));
+            const shareText = `Check out my amazing ${selectedBooking.destination} trip planned with WanderLust AI! ${selectedBooking.duration} of adventure awaits! 🌟`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My WanderLust AI Trip',
+                    text: shareText,
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    showNotification('Trip details copied to clipboard! 📋');
+                });
+            }
+        }
+
+        function modifyTrip() {
+            showNotification('Trip modification feature coming soon! ✨');
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: rgba(255, 215, 0, 0.95);
+                color: #0f4c3a;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                font-weight: 600;
+                z-index: 10000;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+                backdrop-filter: blur(10px);
+                animation: slideInRight 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease-in';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderLust AI - Navigation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #F8BBD9;
+            min-height: 100vh;
+            color: #8B1538;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-container {
+            background: #FCE4EC;
+            border-radius: 15px;
+            border: 2px solid #E91E63;
+            padding: 3rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #8B1538;
+            margin-bottom: 2rem;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            color: #E91E63;
+        }
+
+        .nav-title {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #8B1538;
+            font-weight: bold;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .nav-card {
+            background: #FFF0F5;
+            border: 2px solid #E91E63;
+            border-radius: 10px;
+            padding: 2rem;
+            text-decoration: none;
+            color: #8B1538;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-card:hover {
+            background: #F8BBD9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-icon {
+            font-size: 3rem;
+            color: #E91E63;
+        }
+
+        .nav-card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-card-desc {
+            font-size: 0.9rem;
+            color: #C2185B;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-container">
+        <div class="logo">
+            <i class="fas fa-plane"></i>
+            <span>WanderLust AI</span>
+        </div>
+        
+        <h2 class="nav-title">Choose Your Experience</h2>
+        
+        <div class="nav-grid">
+            <a href="index.html" class="nav-card">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <div class="nav-card-title">Plan New Trip</div>
+                <div class="nav-card-desc">Start planning your dream vacation</div>
+            </a>
+            
+            <a href="booking-history.html" class="nav-card">
+                <i class="fas fa-history nav-icon"></i>
+                <div class="nav-card-title">Booking History</div>
+                <div class="nav-card-desc">View your past and upcoming trips</div>
+            </a>
+            
+            <a href="demo.html" class="nav-card">
+                <i class="fas fa-desktop nav-icon"></i>
+                <div class="nav-card-title">Demo Experience</div>
+                <div class="nav-card-desc">See the full project demo</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

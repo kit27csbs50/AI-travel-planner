@@ -6,17 +6,16 @@
     <title>WanderLust AI - AI Travel Planner</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arial:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-content">
             <div class="logo">
-                <i class="fas fa-plane"></i>
-                <span class="logo-text">WanderLust AI</span>
+                <span class="logo-text">WanderLust</span>
             </div>
-            <p class="subtitle">Your personalized AI travel curator</p>
+            <p class="subtitle">Your personal travel companion</p>
         </div>
     </nav>
 
@@ -31,7 +30,7 @@
                 <div class="form-row">
                     <div class="input-group">
                         <label for="userName">Your Name</label>
-                        <input type="text" id="userName" placeholder="e.g. Sadhana" required>
+                        <input type="text" id="userName" placeholder="e.g. Sadhana M" required>
                     </div>
                     <div class="input-group">
                         <label for="userAge">Age</label>
@@ -64,25 +63,25 @@
                     <h3>Interests (Select multiple)</h3>
                     <div class="pill-container" id="interests">
                         <button type="button" class="pill-btn" data-interest="adventure">
-                            <span>🧗</span> Adventure
+                            Adventure
                         </button>
                         <button type="button" class="pill-btn" data-interest="beach">
-                            <span>🏖️</span> Beach
+                            Beach
                         </button>
                         <button type="button" class="pill-btn" data-interest="culture">
-                            <span>🏛️</span> Culture
+                            Culture
                         </button>
                         <button type="button" class="pill-btn" data-interest="food">
-                            <span>🍽️</span> Food
+                            Food
                         </button>
                         <button type="button" class="pill-btn" data-interest="nature">
-                            <span>🌿</span> Nature
+                            Nature
                         </button>
                         <button type="button" class="pill-btn" data-interest="shopping">
-                            <span>🛍️</span> Shopping
+                            Shopping
                         </button>
                         <button type="button" class="pill-btn" data-interest="relaxation">
-                            <span>🧘</span> Relaxation
+                            Relaxation
                         </button>
                     </div>
                 </div>
@@ -149,15 +148,12 @@
                 <h2 id="itinerary-title">Your Dream Itinerary</h2>
                 <div class="trip-summary">
                     <div class="summary-item">
-                        <i class="fas fa-map-marker-alt"></i>
                         <span id="summary-destination"></span>
                     </div>
                     <div class="summary-item">
-                        <i class="fas fa-rupee-sign"></i>
                         <span id="summary-budget"></span>
                     </div>
                     <div class="summary-item">
-                        <i class="fas fa-calendar"></i>
                         <span id="summary-duration"></span>
                     </div>
                 </div>
@@ -234,8 +230,8 @@
                     <button class="secondary-btn" id="download-ticket">
                         <i class="fas fa-download"></i> Download Ticket
                     </button>
-                    <button class="secondary-btn" id="share-trip">
-                        <i class="fas fa-share"></i> Share Trip
+                    <button class="secondary-btn" id="view-bookings">
+                        <i class="fas fa-history"></i> View Booking History
                     </button>
                     <button class="primary-btn" id="new-trip">
                         Plan New Trip

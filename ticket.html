@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderLust AI - Travel Ticket</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #8B4513;
+            min-height: 100vh;
+            color: #2F1B14;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: #654321;
+            border-bottom: 2px solid #A0522D;
+            padding: 1rem 0;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #F5DEB3;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .back-btn {
+            background: #DEB887;
+            color: #2F1B14;
+            border: 2px solid #A0522D;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #D2B48C;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 120px 2rem 2rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ticket-container {
+            background: #D2B48C;
+            border: 3px solid #A0522D;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .ticket-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #A0522D;
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            border-bottom: 2px dashed #A0522D;
+        }
+
+        .ticket-header h2 {
+            color: #2F1B14;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .ticket-logo {
+            font-weight: bold;
+            color: #654321;
+        }
+
+        .ticket-content {
+            padding: 2rem;
+        }
+
+        .ticket-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            align-items: end;
+        }
+
+        .ticket-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .ticket-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .ticket-field label {
+            font-size: 0.8rem;
+            color: #654321;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: bold;
+        }
+
+        .ticket-field span {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2F1B14;
+        }
+
+        .qr-code {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .qr-pattern {
+            width: 80px;
+            height: 80px;
+            background: #A0522D;
+            border: 2px solid #654321;
+            border-radius: 8px;
+        }
+
+        .qr-code span {
+            font-size: 0.8rem;
+            color: #654321;
+            font-weight: bold;
+        }
+
+        .ticket-actions {
+            display: flex;
+            gap: 1rem;
+            padding: 2rem;
+            border-top: 2px dashed #A0522D;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            min-width: 140px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #A0522D;
+            color: #F5DEB3;
+        }
+
+        .btn-primary:hover {
+            background: #654321;
+        }
+
+        .btn-secondary {
+            background: #DEB887;
+            color: #2F1B14;
+            border: 2px solid #A0522D;
+        }
+
+        .btn-secondary:hover {
+            background: #D2B48C;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 100px 1rem 1rem;
+            }
+            
+            .ticket-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .ticket-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <i class="fas fa-plane"></i>
+                <span class="logo-text">WanderLust AI</span>
+            </div>
+            <a href="booking-history.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Bookings
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="ticket-container">
+            <div class="ticket-header">
+                <h2>✈️ Travel Ticket</h2>
+                <div class="ticket-logo">WanderLust AI</div>
+            </div>
+            
+            <div class="ticket-content">
+                <div class="ticket-row">
+                    <div class="ticket-field">
+                        <label>Passenger Name</label>
+                        <span id="ticket-name">Loading...</span>
+                    </div>
+                    <div class="ticket-field">
+                        <label>Booking ID</label>
+                        <span id="ticket-booking-id">Loading...</span>
+                    </div>
+                </div>
+                
+                <div class="ticket-row">
+                    <div class="ticket-field">
+                        <label>Destination</label>
+                        <span id="ticket-destination">Loading...</span>
+                    </div>
+                    <div class="ticket-field">
+                        <label>Duration</label>
+                        <span id="ticket-duration">Loading...</span>
+                    </div>
+                </div>
+                
+                <div class="ticket-row">
+                    <div class="ticket-field">
+                        <label>Seat Number</label>
+                        <span id="ticket-seat">Loading...</span>
+                    </div>
+                    <div class="qr-code">
+                        <div class="qr-pattern"></div>
+                        <span>QR Code</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ticket-actions">
+                <button class="btn btn-secondary" id="download-ticket">
+                    <i class="fas fa-download"></i> Download
+                </button>
+                <button class="btn btn-secondary" id="share-ticket">
+                    <i class="fas fa-share"></i> Share
+                </button>
+                <a href="booking-history.html" class="btn btn-primary">
+                    <i class="fas fa-history"></i> Back to History
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTicketDetails();
+            
+            // Add event listeners
+            document.getElementById('download-ticket').addEventListener('click', downloadTicket);
+            document.getElementById('share-ticket').addEventListener('click', shareTicket);
+        });
+
+        function loadTicketDetails() {
+            // Get selected booking from localStorage
+            const selectedBooking = JSON.parse(localStorage.getItem('selectedBooking'));
+            
+            if (!selectedBooking) {
+                alert('No ticket selected. Redirecting to booking history.');
+                window.location.href = 'booking-history.html';
+                return;
+            }
+
+            // Populate ticket details
+            document.getElementById('ticket-name').textContent = selectedBooking.passengerName;
+            document.getElementById('ticket-destination').textContent = selectedBooking.destination;
+            document.getElementById('ticket-duration').textContent = selectedBooking.duration;
+            document.getElementById('ticket-booking-id').textContent = selectedBooking.id;
+            document.getElementById('ticket-seat').textContent = selectedBooking.seatNumber;
+        }
+
+        function downloadTicket() {
+            const selectedBooking = JSON.parse(localStorage.getItem('selectedBooking'));
+            const link = document.createElement('a');
+            link.download = `WanderLust-AI-Ticket-${selectedBooking.passengerName.replace(/\s+/g, '-')}.pdf`;
+            link.href = 'data:text/plain;charset=utf-8,WanderLust AI Travel Ticket - ' + selectedBooking.passengerName;
+            link.click();
+            
+            showNotification('Ticket downloaded successfully! 📄');
+        }
+
+        function shareTicket() {
+            const selectedBooking = JSON.parse(localStorage.getItem('selectedBooking'));
+            const shareText = `My travel ticket for ${selectedBooking.destination} - ${selectedBooking.duration}! Booking ID: ${selectedBooking.id}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Travel Ticket',
+                    text: shareText,
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    showNotification('Ticket details copied! 📋');
+                });
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: #A0522D;
+                color: #F5DEB3;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                font-weight: bold;
+                z-index: 10000;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
